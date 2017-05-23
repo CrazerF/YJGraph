@@ -85,7 +85,6 @@
         if (i == 0) {
             startX = x;
             startY = y;
-            //CGPathMoveToPoint(graphPath, NULL, kEdgeInsertSpace,self.frame.size.height - kEdgeInsertSpace);
             CGPathMoveToPoint(graphPath, NULL, x, y);
         }else{
         CGPathAddLineToPoint(graphPath, NULL, x, y);
@@ -172,20 +171,26 @@
     CGFloat width = self.frame.size.width;
     CGFloat height = self.frame.size.height;
     //绘制坐标框
-    CGContextAddRect(context, CGRectMake(kEdgeInsertSpace, kEdgeInsertSpace, width - 2 * kEdgeInsertSpace, height - 2 * kEdgeInsertSpace));
+    CGContextAddRect(context, CGRectMake(kEdgeInsertSpace,
+                                         kEdgeInsertSpace,
+                                         width - 2 * kEdgeInsertSpace,
+                                         height - 2 * kEdgeInsertSpace));
     CGContextStrokePath(context);
     
-    //绘制虚线框
-    CGFloat lenths[1] = {5};
-    CGContextSetLineDash(context, 0, lenths, sizeof(lenths)/sizeof(lenths[0]));
-      //行高
+    //绘制虚线
+    CGFloat lengths[1] = {5};
+    CGContextSetLineDash(context, 0, lengths, sizeof(lengths) / sizeof(lengths[0]));
+    
+    //行高
     CGFloat rowHeight = [self rowHeight];
-    for (int i = 0; i < kNumberOfRow; i++) {
+    
+    for (int i = 1; i < kNumberOfRow; i++) {
         CGFloat y = kEdgeInsertSpace + rowHeight * i;
         CGContextMoveToPoint(context, kEdgeInsertSpace, y);
-        CGContextAddLineToPoint(context, kEdgeInsertSpace, y);
+        CGContextAddLineToPoint(context, width - kEdgeInsertSpace, y);
         CGContextStrokePath(context);
     }
+    
     
 }
 
